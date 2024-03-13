@@ -1,42 +1,46 @@
 # My_DevOps_2024
-1. Install tomcat 
-    a. copy the script tomacat/install.sh and run it (sudo bash isntall.sh)
-    b. - get the raw content of tomacat/install.sh
-       - curl -s https://raw.githubusercontent.com/jaintpharsha/Devops-ITD-May-2023/main/tomcat/install.sh | sudo bash 
-       - Folow the instructions from the script 
-            - STEP2 (add manager user to tomcat), STEP3 - (Allow all IP access to tomcat) and STEP4 - (Reload and start Tomcat)
+# Simple Calculator
 
-    ACCESS_TOMCAT: http://<ip_address>:8080
-    
-2. Setup CI/CD in Jenkins (Declarative pipeline)
-   a. use tomcat/Jenkinsfile or maven/Jenkinsfile
-   
-   b. Add tomcat manager credentials 
-      Dashboard > Manage Jenkins > Credentials > System > Global credentials (unrestricted) > add credentials > username and password
-          add the manger-script - username and password given in file /opt/tomcat/conf/tomcat-users.xml
+def add(x, y):
+    """Addition"""
+    return x + y
 
-   c. Use maven tool in pipeline 
-       Dashboard > Manage Jenkins > Tools > maven 
-        get the name of maven tool (Name: maven-3.9.2) and use it in pipeline.
-          tools {
-              maven 'maven-3.9.2'
-          }
+def subtract(x, y):
+    """Subtraction"""
+    return x - y
 
-   d. Configure the github webhook 
-        Github 
-          - Goto > Repository setting > Code and automation - Webhooks > Add webhook
-              Payload URL: <jenkins_url>/github-webhooks/
-              Content type: application/json
-              secret: <optional>/<Jenkins-secret-text>
-        Jenkins 
-            a. In any job which we want to trigger from webhook 
-                - Job configuration > Build Triggers > check - GitHub hook trigger for GITScm polling
-            b. To enable secret for web hook 
-                - Create a secret 
-                    Dashboard > Manage Jenkins > Credentials > System > Global credentials (unrestricted) > add credentials > secret text
-                      (can give any text for secret - but random 20+ characters is most preffered)
-            c. Add secret to Github plugin configuration 
-                Dashboard > Manage Jenkins > System Configuration - System >  GitHub - Advanded > Shared secret > choose the above created secret text
+def multiply(x, y):
+    """Multiplication"""
+    return x * y
 
+def divide(x, y):
+    """Division"""
+    if y == 0:
+        return "Error! Division by zero."
+    return x / y
 
-        
+# Main program
+print("Select operation:")
+print("1. Add")
+print("2. Subtract")
+print("3. Multiply")
+print("4. Divide")
+
+while True:
+    choice = input("Enter choice (1/2/3/4): ")
+
+    if choice in ('1', '2', '3', '4'):
+        num1 = float(input("Enter first number: "))
+        num2 = float(input("Enter second number: "))
+
+        if choice == '1':
+            print("Result:", add(num1, num2))
+        elif choice == '2':
+            print("Result:", subtract(num1, num2))
+        elif choice == '3':
+            print("Result:", multiply(num1, num2))
+        elif choice == '4':
+            print("Result:", divide(num1, num2))
+        break
+    else:
+        print("Invalid Input")
